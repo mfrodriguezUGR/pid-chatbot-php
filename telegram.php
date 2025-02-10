@@ -17,7 +17,8 @@ $response = [
 
 // Enviar respuesta a Telegram
 if ($chat_id) {
-    $apiToken = "TU_BOT_TOKEN_AQUI";
+    $properties = parse_ini_file('bot.properties');
+    $apiToken = $properties['apiToken'] ?? null;
     $url = "https://api.telegram.org/bot$apiToken/sendMessage";
 
     $options = [
