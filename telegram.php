@@ -3,9 +3,6 @@
 $update = file_get_contents("php://input");
 $updateData = json_decode($update, true);
 
-// Registrar la petición en un archivo (para depuración)
-file_put_contents("telegram_log.txt", $update . PHP_EOL, FILE_APPEND);
-
 // Extraer el chat ID (si está disponible)
 $chat_id = $updateData['message']['chat']['id'] ?? null;
 
@@ -32,12 +29,4 @@ if ($chat_id) {
     $context  = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
 }
-
-// Responder con JSON en el servidor (útil para pruebas en navegador o herramientas de API)
-header("Content-Type: application/json");
-echo json_encode([
-    'status' => 'ok',
-    'request' => $updateData,
-    'telegram_response' => $result ? json_decode($result, true) : null
-]);
 ?>
